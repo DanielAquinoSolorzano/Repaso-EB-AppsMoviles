@@ -1,8 +1,7 @@
-import 'package:book_app/features/home/presentation/catalog/catalog_view_model.dart';
+import 'package:book_app/features/home/presentation/home_view_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:book_app/features/home/presentation/favorites/favorites_view_model.dart';
 
 class BookDetailPage extends StatelessWidget {
   const BookDetailPage({super.key, required this.bookId});
@@ -10,8 +9,7 @@ class BookDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Escuchamos los cambios del CatalogViewModel
-    final viewModel = context.watch<CatalogViewModel>();
+    final viewModel = context.watch<HomeViewModel>();
 
     // Buscamos el libro actual dentro del estado del ViewModel usando el ID
     final book = viewModel.state.books.firstWhere(
@@ -32,7 +30,7 @@ class BookDetailPage extends StatelessWidget {
               await viewModel.toggleFavorite(book.id, !book.isFavorite);
 
               if (context.mounted) {
-                await context.read<FavoritesViewModel>().getFavorites();
+                await context.read<HomeViewModel>().getBooks();
               }
             },
           ),

@@ -26,7 +26,7 @@ class CatalogListItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: book.cover,
                     fit: BoxFit
-                        .cover, // 👈 CAMBIADO: De 'contain' a 'cover' para llenar el espacio
+                        .cover, // De 'contain' a 'cover' para llenar el espacio
                     width: double.infinity,
                     height: double
                         .infinity, // Asegura que use todo el alto del Expanded

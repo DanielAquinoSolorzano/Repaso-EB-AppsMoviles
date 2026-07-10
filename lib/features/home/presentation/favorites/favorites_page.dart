@@ -1,6 +1,7 @@
+import 'package:book_app/features/home/domain/book.dart';
 import 'package:book_app/features/home/presentation/favorites/favorites_list.dart';
-import 'package:book_app/features/home/presentation/favorites/favorites_state.dart';
-import 'package:book_app/features/home/presentation/favorites/favorites_view_model.dart';
+import 'package:book_app/features/home/presentation/home_state.dart';
+import 'package:book_app/features/home/presentation/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +11,9 @@ class FavoritesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final FavoritesViewModel viewModel = context.watch<FavoritesViewModel>();
-    final FavoritesState state = viewModel.state;
-
+    final HomeViewModel viewModel = context.watch<HomeViewModel>();
+    final HomeState state = viewModel.state;
+    final List<Book> favorites = state.books.where((book) => book.isFavorite).toList();
 
     if (viewModel.state.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -22,10 +23,10 @@ class FavoritesPage extends StatelessWidget {
       return Center(child: Text(state.errorMessage!));
     }
 
-    if (viewModel.state.favorites.isEmpty) {
+    if (favorites.isEmpty) {
       return const Center(child: Text('No favorites books'));
     }
 
-    return FavoritesList(books: state.favorites);
+    return FavoritesList(favorites: favorites);
   }
 }

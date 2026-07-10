@@ -1,12 +1,12 @@
 import 'package:book_app/features/home/domain/book_repository.dart';
-import 'package:book_app/features/home/presentation/catalog/catalog_state.dart';
+import 'package:book_app/features/home/presentation/home_state.dart';
 import 'package:flutter/material.dart';
 
-class CatalogViewModel extends ChangeNotifier {
-  CatalogState state = const CatalogState();
+class HomeViewModel extends ChangeNotifier {
+  HomeState state = const HomeState();
   final BookRepository repository;
 
-  CatalogViewModel({required this.repository}) {
+  HomeViewModel({required this.repository}) {
     getBooks();
   }
 
@@ -38,7 +38,7 @@ class CatalogViewModel extends ChangeNotifier {
 
       await repository.toggleFavorite(bookId, isFavorite);
     } catch (e) {
-      state = state.copyWith(errorMessage: "No se pudo actualizar favoritos");
+      state = state.copyWith(errorMessage: "Unable to update book $bookId favorite status:");
       notifyListeners();
     }
   }

@@ -13,7 +13,7 @@ class CatalogList extends StatelessWidget {
       itemCount: books.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.5, // 👈 AGREGADO: Controla la proporción (Ancho / Alto)
+        childAspectRatio: 0.5, // Controla la proporción (Ancho / Alto)
         crossAxisSpacing: 4, // Espaciado horizontal entre tarjetas
         mainAxisSpacing: 4, // Espaciado vertical entre tarjetas
       ),

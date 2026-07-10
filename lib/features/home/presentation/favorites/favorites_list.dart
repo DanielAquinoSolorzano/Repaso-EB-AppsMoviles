@@ -4,33 +4,33 @@ import 'package:book_app/features/home/presentation/favorites/favorites_list_ite
 import 'package:flutter/material.dart';
 
 class FavoritesList extends StatelessWidget {
-  const FavoritesList({super.key, required this.books});
-  final List<Book> books;
+  const FavoritesList({super.key, required this.favorites});
+  final List<Book> favorites;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: books.length,
+      itemCount: favorites.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.5, // 👈 AGREGADO: Controla la proporción (Ancho / Alto)
+        childAspectRatio: 0.5, //Controla la proporción (Ancho / Alto)
         crossAxisSpacing: 4, // Espaciado horizontal entre tarjetas
         mainAxisSpacing: 4, // Espaciado vertical entre tarjetas
       ),
       itemBuilder: (context, index) {
-        final book = books[index];
+        final favorite = favorites[index];
         return GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 // Pasamos el ID en lugar del objeto completo
-                builder: (context) => BookDetailPage(bookId: book.id),
+                builder: (context) => BookDetailPage(bookId: favorite.id),
               ),
             );
           },
 
-          child: FavoritesListItem(book: book),
+          child: FavoritesListItem(book: favorite),
         );
       },
     );

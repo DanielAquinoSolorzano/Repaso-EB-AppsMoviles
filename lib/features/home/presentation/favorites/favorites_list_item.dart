@@ -1,5 +1,5 @@
 import 'package:book_app/features/home/domain/book.dart';
-import 'package:book_app/features/home/presentation/favorites/favorites_view_model.dart';
+import 'package:book_app/features/home/presentation/home_view_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +10,7 @@ class FavoritesListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Obtenemos el viewModel de favoritos sin escuchar cambios aquí (read)
-    // porque el GridView principal ya se redibuja mediante el Page
-    final favoritesViewModel = context.watch<FavoritesViewModel>();
+    final favoritesViewModel = context.read<HomeViewModel>();
 
     return Card(
       margin: const EdgeInsets.all(8),
@@ -23,7 +21,6 @@ class FavoritesListItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagen de Portada
             Expanded(
               child: Hero(
                 tag: book.id,
@@ -33,6 +30,7 @@ class FavoritesListItem extends StatelessWidget {
                     imageUrl: book.cover,
                     fit: BoxFit.cover,
                     width: double.infinity,
+                    height: double.infinity,
                     placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(strokeWidth: 2),
                     ),
@@ -43,36 +41,44 @@ class FavoritesListItem extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            // Título del libro
             Text(
               book.title,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            // Autor y Fila de Acción (Quitar Favorito)
+            const SizedBox(height: 4),
+            Text(
+              book.author,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              book.genre,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(color: Colors.grey[600]),
+            ),
+            const SizedBox(height: 6),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Text(
-                    book.author,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(color: Colors.grey[700], fontSize: 13),
-                  ),
-                ),
-                // Botón directo para eliminar de favoritos
+                const Icon(Icons.star, color: Colors.amber, size: 16),
+                const SizedBox(width: 4),
+                Text('${book.rating} / 5'),
+                const Spacer(),
                 IconButton(
-                  constraints: const BoxConstraints(),
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
                   padding: EdgeInsets.zero,
                   icon: const Icon(Icons.favorite, color: Colors.red, size: 22),
+                  tooltip: 'Eliminar de favoritos',
                   onPressed: () async {
-                    // LLamamos al método para remover (puedes reusar toggleFavorite si tu repositorio lo maneja así)
                     await favoritesViewModel.toggleFavorite(book.id, !book.isFavorite);
 
                     if (context.mounted) {
-                      await context.read<FavoritesViewModel>().getFavorites();
+                      await context.read<HomeViewModel>().getBooks();
                     }
                   },
                 ),
