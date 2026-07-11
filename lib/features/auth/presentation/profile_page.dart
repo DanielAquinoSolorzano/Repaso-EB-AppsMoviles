@@ -29,7 +29,9 @@ class ProfilePage extends StatelessWidget {
           Center(
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.16),
+              backgroundColor: theme.colorScheme.primary.withValues(
+                alpha: 0.16,
+              ),
               child: Text(
                 '${user.firstName[0]}${user.lastName[0]}'.toUpperCase(),
                 style: theme.textTheme.headlineMedium?.copyWith(
@@ -91,7 +93,7 @@ class ProfilePage extends StatelessWidget {
                 (route) => false,
               );
             },
-            child: const Text('Cerrar sesión'),
+            child: const Text('Log Out'),
           ),
         ],
       ),
@@ -114,18 +116,18 @@ class _ProfileRow extends StatelessWidget {
           flex: 3,
           child: Text(
             label,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey[600],
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
           ),
         ),
         Expanded(
           flex: 5,
           child: Text(
             value,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
           ),
         ),
       ],

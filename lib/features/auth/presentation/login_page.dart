@@ -21,9 +21,9 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState!.validate()) return;
 
     context.read<LoginViewModel>().login(
-          _emailController.text.trim(),
-          _passwordController.text.trim(),
-        );
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
   }
 
   @override
@@ -51,9 +51,9 @@ class _LoginPageState extends State<LoginPage> {
             }
 
             if (state is LoginFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(state.message)));
             }
           },
           builder: (context, state) {
@@ -62,9 +62,14 @@ class _LoginPageState extends State<LoginPage> {
             return LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 28,
+                  ),
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 480),
@@ -99,22 +104,26 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Form(
                                   key: _formKey,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       TextFormField(
                                         controller: _emailController,
-                                        keyboardType: TextInputType.emailAddress,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         decoration: InputDecoration(
-                                          labelText: 'Correo electrónico',
-                                          hintText: 'ejemplo@correo.com',
+                                          labelText: 'Email',
+                                          hintText: 'test@example.com',
                                           prefixIcon: const Icon(Icons.email),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
                                           ),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Ingresa tu correo electrónico';
+                                            return 'Enter you email';
                                           }
                                           return null;
                                         },
@@ -124,52 +133,64 @@ class _LoginPageState extends State<LoginPage> {
                                         controller: _passwordController,
                                         obscureText: _obscurePassword,
                                         decoration: InputDecoration(
-                                          labelText: 'Contraseña',
+                                          labelText: 'Password',
                                           hintText: '••••••••',
                                           prefixIcon: const Icon(Icons.lock),
                                           suffixIcon: IconButton(
-                                            icon: Icon(_obscurePassword
-                                                ? Icons.visibility_off
-                                                : Icons.visibility),
+                                            icon: Icon(
+                                              _obscurePassword
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                            ),
                                             onPressed: () {
                                               setState(() {
-                                                _obscurePassword = !_obscurePassword;
+                                                _obscurePassword =
+                                                    !_obscurePassword;
                                               });
                                             },
                                           ),
                                           border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(16),
+                                            borderRadius: BorderRadius.circular(
+                                              16,
+                                            ),
                                           ),
                                         ),
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
-                                            return 'Ingresa tu contraseña';
+                                            return 'Enter your password';
                                           }
                                           if (value.length < 6) {
-                                            return 'La contraseña debe tener al menos 6 caracteres';
+                                            return 'Password must be at least 6 characters';
                                           }
                                           return null;
                                         },
                                       ),
                                       const SizedBox(height: 24),
                                       FilledButton(
-                                        onPressed: isLoading ? null : _submitLogin,
+                                        onPressed: isLoading
+                                            ? null
+                                            : _submitLogin,
                                         style: FilledButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(vertical: 16),
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 16,
+                                          ),
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(14),
+                                            borderRadius: BorderRadius.circular(
+                                              14,
+                                            ),
                                           ),
                                         ),
                                         child: isLoading
                                             ? const SizedBox(
                                                 height: 18,
                                                 width: 18,
-                                                child: CircularProgressIndicator(
-                                                  strokeWidth: 2,
-                                                  color: Colors.white,
-                                                ),
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      color: Colors.white,
+                                                    ),
                                               )
-                                            : const Text('Login'),
+                                            : const Text('Log in'),
                                       ),
                                     ],
                                   ),
