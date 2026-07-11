@@ -3,6 +3,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:book_app/features/home/presentation/read_list/read_list_view_model.dart';
+
 class BookDetailPage extends StatelessWidget {
   const BookDetailPage({super.key, required this.bookId});
   final int bookId;
@@ -10,12 +12,15 @@ class BookDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<HomeViewModel>();
+    final readListViewModel = context.watch<ReadListViewModel>();
 
     // Buscamos el libro actual dentro del estado del ViewModel usando el ID
     final book = viewModel.state.books.firstWhere(
       (b) => b.id == bookId,
       orElse: () => throw Exception('Libro no encontrado'),
     );
+
+    final bool isInReadList = readListViewModel.state.booksInReadList.any((b) => b.id == bookId);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,11 +39,14 @@ class BookDetailPage extends StatelessWidget {
               }
             },
           ),
-          // Icono de más para Lista de Lectura (Solo diseño por ahora)
+          // Icono para Lista de Lectura
           IconButton(
-            icon: const Icon(Icons.bookmark_add_outlined),
-            onPressed: () {
-              // TODO: Implementar agregar/quitar de lista de lectura
+            icon: Icon(
+              isInReadList ? Icons.bookmark : Icons.bookmark_add_outlined,
+              color: isInReadList ? Colors.blue : null,
+            ),
+            onPressed: () async {
+              await readListViewModel.toggleReadList(book.id);
             },
           ),
           const SizedBox(width: 8),

@@ -6,8 +6,10 @@ abstract class BookRepository {
 
   Future<List<Book>> getFavorites();
 
-  //Future<List<Book>> getBookInReadList();
+  Future<List<Book>> getBooksInReadList();
 
   Future<void> toggleFavorite(int bookId, bool isFavorite);
+
+  Future<void> toggleReadList(int bookId);
 
 }

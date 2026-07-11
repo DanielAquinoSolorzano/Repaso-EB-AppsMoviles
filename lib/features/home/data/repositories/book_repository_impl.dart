@@ -59,4 +59,21 @@ class BookRepositoryImpl implements BookRepository {
   Future<void> toggleFavorite(int bookId, bool isFavorite) {
     return dao.toggleFavorite(bookId, isFavorite);
   }
+  
+  @override
+  Future<List<Book>> getBooksInReadList() async {
+    try {
+      final booksInReadListDto = await service.getBooksInReadList();
+      final books = booksInReadListDto.map((dto) => dto.toDomain()).toList();
+      return books;
+
+    } catch (e) {
+      throw Exception('Failed to load favorites books. hmm');       
+    }
+  }
+
+  @override
+  Future<void> toggleReadList(int bookId) {
+    return service.toggleReadList(bookId);
+  }
 }

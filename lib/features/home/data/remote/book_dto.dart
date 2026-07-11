@@ -8,6 +8,7 @@ class BookDto {
   final double rating;
   final String genre;
   final String overview;
+  final String? addedToReadListAt;
 
   BookDto({
     required this.id,
@@ -19,19 +20,24 @@ class BookDto {
     required this.rating,
     required this.genre,
     required this.overview,
+    required this.addedToReadListAt
   });
 
   factory BookDto.fromJson(Map<String, dynamic> json) {
+    // Si el JSON viene anidado dentro de "book" (como suele pasar en endpoints de listas/relaciones)
+    final bookData = json.containsKey('book') ? json['book'] as Map<String, dynamic> : json;
+
     return BookDto(
-      id: json['id'],
-      title: json['title'],
-      author: json['author'],
-      cover: json['cover'],
-      publisher: json['publisher'],
-      year: json['year'],
-      rating: json['rating'],
-      genre: json['genre'],
-      overview: json['overview'],
+      id: bookData['id'] ?? bookData['bookId'] ?? 0,
+      title: bookData['title'] ?? '',
+      author: bookData['author'] ?? '',
+      cover: bookData['cover'] ?? '',
+      publisher: bookData['publisher'] ?? '',
+      year: bookData['year'] ?? 0,
+      rating: (bookData['rating'] ?? 0.0).toDouble(),
+      genre: bookData['genre'] ?? '',
+      overview: bookData['overview'] ?? '',
+      addedToReadListAt: json['addedAt'] ?? bookData['addedAt'],
     );
   }
 }

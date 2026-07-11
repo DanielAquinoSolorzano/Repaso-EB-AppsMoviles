@@ -2,6 +2,7 @@ import 'package:book_app/features/auth/domain/user.dart';
 import 'package:book_app/features/auth/presentation/profile_page.dart';
 import 'package:book_app/features/home/presentation/catalog/catalog_page.dart';
 import 'package:book_app/features/home/presentation/favorites/favorites_page.dart';
+import 'package:book_app/features/home/presentation/read_list/read_list_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _MainPageState extends State<MainPage> {
     pages = [
       const CatalogPage(),
       const FavoritesPage(),
-      const CatalogPage(),
+      const ReadListPage(),
       ProfilePage(user: widget.user),
     ];
   }

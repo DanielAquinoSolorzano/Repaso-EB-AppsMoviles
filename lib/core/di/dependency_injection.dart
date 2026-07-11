@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:book_app/core/database/app_database.dart';
 import 'package:book_app/core/storage/token_storage.dart';
 import 'package:book_app/features/auth/data/remote/auth_service.dart';
@@ -11,6 +9,7 @@ import 'package:book_app/features/home/data/remote/book_service.dart';
 import 'package:book_app/features/home/data/repositories/book_repository_impl.dart';
 import 'package:book_app/features/home/domain/book_repository.dart';
 import 'package:book_app/features/home/presentation/home_view_model.dart';
+import 'package:book_app/features/home/presentation/read_list/read_list_view_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,8 +21,17 @@ void setupDependencies() {
   getIt.registerLazySingleton<BookDao>(
     () => BookDao(appDatabase: getIt<AppDatabase>()),
   );
+  getIt.registerLazySingleton<FlutterSecureStorage>(
+    () => FlutterSecureStorage(),
+  );
 
-  getIt.registerLazySingleton<BookService>(() => BookService());
+  getIt.registerLazySingleton<TokenStorage>(
+    () => TokenStorage(storage: getIt<FlutterSecureStorage>()),
+  );
+
+  getIt.registerLazySingleton<BookService>(
+    () => BookService(storage: getIt<TokenStorage>()),
+  );
 
   getIt.registerLazySingleton<BookRepository>(
     () => BookRepositoryImpl(
@@ -36,18 +44,14 @@ void setupDependencies() {
     () => HomeViewModel(repository: getIt<BookRepository>()),
   );
 
+  getIt.registerFactory<ReadListViewModel>(
+    () => ReadListViewModel(repository: getIt<BookRepository>()),
+  );
 
 
-/////////////////////////////////////////////////
-  getIt.registerLazySingleton<FlutterSecureStorage>(() => FlutterSecureStorage());
 
-
-  getIt.registerLazySingleton<TokenStorage>(() => TokenStorage(
-    storage: getIt<FlutterSecureStorage>()
-  ));
 
   getIt.registerLazySingleton<AuthService>(() => AuthService());
-
 
   getIt.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(

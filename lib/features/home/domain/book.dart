@@ -9,7 +9,7 @@ class Book {
   final String genre;
   final String overview;
   bool isFavorite;
-  //final String? addedToReadListAt;
+  final String? addedToReadListAt;
 
   Book({
     required this.id,
@@ -22,7 +22,7 @@ class Book {
     required this.genre,
     required this.overview,
     required this.isFavorite,
-    //this.addedToReadListAt,
+    this.addedToReadListAt,
   });
 
   Book copyWith({bool? isFavorite, String? addedToReadListAt}) {
@@ -37,7 +37,7 @@ class Book {
       genre: genre,
       overview: overview,
       isFavorite: isFavorite ?? this.isFavorite,
-      //addedToReadListAt: addedToReadListAt ?? this.addedToReadListAt,
+      addedToReadListAt: addedToReadListAt ?? this.addedToReadListAt,
     );
   }
 }

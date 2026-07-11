@@ -14,7 +14,9 @@ extension BookDtoMapper on BookDto {
       rating: rating,
       genre: genre,
       overview: overview,
-      isFavorite: false
+      isFavorite: false,
+      addedToReadListAt: addedToReadListAt
+      
     );
   }
 }
