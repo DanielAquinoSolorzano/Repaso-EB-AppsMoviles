@@ -1,7 +1,9 @@
 import 'package:book_app/core/di/dependency_injection.dart';
+import 'package:book_app/features/auth/presentation/login_page.dart';
+import 'package:book_app/features/auth/presentation/login_view_model.dart';
 import 'package:book_app/features/home/presentation/home_view_model.dart';
-import 'package:book_app/features/main/presentation/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -11,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => getIt<HomeViewModel>()),
+        BlocProvider(create: (context) => getIt<LoginViewModel>()),
       ],
       child: MainApp(),
     )
@@ -23,6 +26,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Scaffold(body: MainPage()));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginPage());
   }
 }

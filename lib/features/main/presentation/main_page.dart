@@ -1,9 +1,13 @@
+import 'package:book_app/features/auth/domain/user.dart';
+import 'package:book_app/features/auth/presentation/profile_page.dart';
 import 'package:book_app/features/home/presentation/catalog/catalog_page.dart';
 import 'package:book_app/features/home/presentation/favorites/favorites_page.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final User user;
+
+  const MainPage({super.key, required this.user});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -11,13 +15,18 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int selectedIndex = 0;
+  late final List<Widget> pages;
 
-  final List<Widget> pages = const [
-    CatalogPage(),
-    FavoritesPage(),
-    CatalogPage(),
-    CatalogPage(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      const CatalogPage(),
+      const FavoritesPage(),
+      const CatalogPage(),
+      ProfilePage(user: widget.user),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

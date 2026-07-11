@@ -10,10 +10,11 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final HomeViewModel viewModel = context.watch<HomeViewModel>();
     final HomeState state = viewModel.state;
-    final List<Book> favorites = state.books.where((book) => book.isFavorite).toList();
+    final List<Book> favorites = state.books
+        .where((book) => book.isFavorite)
+        .toList();
 
     if (viewModel.state.isLoading) {
       return const Center(child: CircularProgressIndicator());
@@ -24,7 +25,12 @@ class FavoritesPage extends StatelessWidget {
     }
 
     if (favorites.isEmpty) {
-      return const Center(child: Text('No favorites books'));
+      return const Center(
+        child: Text(
+          'No favorites books',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      );
     }
 
     return FavoritesList(favorites: favorites);

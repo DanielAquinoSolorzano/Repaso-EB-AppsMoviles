@@ -2,7 +2,7 @@ import 'package:book_app/features/home/data/local/book_entity.dart';
 import 'package:book_app/features/home/data/remote/book_dto.dart';
 import 'package:book_app/features/home/domain/book.dart';
 
-extension BookMapper on BookDto {
+extension BookDtoMapper on BookDto {
   Book toDomain() {
     return Book(
       id: id,
