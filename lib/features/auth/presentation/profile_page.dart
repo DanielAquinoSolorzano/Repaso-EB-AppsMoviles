@@ -29,7 +29,7 @@ class ProfilePage extends StatelessWidget {
           Center(
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: theme.colorScheme.primary.withOpacity(0.16),
+              backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.16),
               child: Text(
                 '${user.firstName[0]}${user.lastName[0]}'.toUpperCase(),
                 style: theme.textTheme.headlineMedium?.copyWith(
